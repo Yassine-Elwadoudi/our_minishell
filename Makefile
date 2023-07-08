@@ -6,7 +6,7 @@
 #    By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/31 11:03:36 by asabri            #+#    #+#              #
-#    Updated: 2023/07/08 14:18:45 by yelwadou         ###   ########.fr        #
+#    Updated: 2023/07/08 19:06:59 by yelwadou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ SRC = src/env/env.c src/env/env_utils.c src/main.c src/token/tokenizing.c gc/ft_
 		src/built_ins/pwd.c src/built_ins/unset.c
  
 CC = cc
-CFLAGS = -Wall -Wextra -Werror 
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
 
 RM = rm -rf
 HEADER = includes/minishell.h includes/ft_malloc.h includes/token.h

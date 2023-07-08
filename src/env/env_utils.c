@@ -6,7 +6,7 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 14:30:53 by asabri            #+#    #+#             */
-/*   Updated: 2023/07/08 13:36:14 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/07/08 19:21:43 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,9 @@ char **takevar(char *str)
     i = 0;
     j = -1;
     while (str[++j]);
-    while (str[i] != '=')
+    while (str[i] != '=' && str[i] != '\0')
         i++;
+
     var[0] = ft_substr(str,0,i);
     var[1] = ft_substr(str,i + 1,j);
     return(var);
