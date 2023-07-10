@@ -6,7 +6,7 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:12:45 by asabri            #+#    #+#             */
-/*   Updated: 2023/07/08 14:27:33 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/07/10 01:27:34 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	built_ins(int argc, char **argv, t_env *envrm)
 {
-    
 	if (ft_strcmp(argv[0], "env") == 0)
 		env(envrm);
 	if (ft_strcmp(argv[0], "unset") == 0 && argc > 1)
@@ -67,9 +66,10 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	(void)env;
 	envrm = dup_env(env);
+	// check_oldpwd(&envrm);
 	while (1)
 	{
-		line = readline("\E[31;1mminishell-$   \033[0m");
+		line = readline("\E[31;1mminishell-$  \033[0m");
 		process_line(line, envrm);
 	}
 	return (0);

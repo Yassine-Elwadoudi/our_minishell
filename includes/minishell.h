@@ -6,7 +6,7 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:04:19 by asabri            #+#    #+#             */
-/*   Updated: 2023/07/08 14:13:28 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/07/09 23:02:30 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ char **takevar(char *str);
 void	add_var_back(t_env **lst, t_env *new);
 t_env	*ft_lstlast(t_env *node);
 void	built_ins(int argc, char **argv, t_env *envrm);
+void check_oldpwd(t_env **env);
 // execution part
 
 #endif

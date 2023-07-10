@@ -6,18 +6,15 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:33:30 by yelwadou          #+#    #+#             */
-/*   Updated: 2023/07/08 13:34:57 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/07/10 01:28:57 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-
 static void update_env(t_env **env, const char *pwd, const char *oldpwd)
 {
     if (oldpwd == NULL)
-        return;
-    if (pwd == NULL)
         return;
     t_env *pwd_var = find_env(*env, "PWD");
     if (pwd_var)
@@ -33,37 +30,64 @@ static void update_env(t_env **env, const char *pwd, const char *oldpwd)
     }
 }
 
+void check_oldpwd(t_env **env)
+{
+    t_env *oldpwd = find_env(*env, "OLDPWD");
+    char *old = getcwd(NULL, 0);
+    char **new_old;
+    if (oldpwd)
+    {
+        free(oldpwd->val);
+        oldpwd->val = ft_strdup(old);
+    }
+    else if (!oldpwd)
+    {
+        new_old = malloc(sizeof(char *) * 2);
+        new_old[0] = ft_strdup("OLDPWD");
+        new_old[1] = ft_strdup("");
+        add_var_back(env, newvar(new_old));
+    }
+    free(old);
+}
+
+
+
 void cd(int args_count, char **args, t_env **env)
 {
-    char *old_pwd;
     char *new_pwd;
     char *home;
-
-    old_pwd = getcwd(NULL, 0);
-    if (old_pwd == NULL)
-        printf("cd: error retrieving current directory: getcwd:\
-            cannot access parent directories: No such file or directory\n");
+    
     home = getenv("HOME");
-    char *old = getenv("OLDPWD");
+    check_oldpwd(env); // Call check_oldpwd before changing directories
+    char *old = getcwd(NULL, 0);
     if (args_count == 1 || args[1][0] == '~')
         chdir(home);
-    if (args_count == 2 && args[1][0] == '-')
-        chdir(old);
-    //  returns 0 if the change is done succefully 
-    // returns -1 if the change failed
-    else if (args_count == 2)
+    else if (args_count == 2 && args[1][0] == '-')
     {
-        if (chdir(args[1]) == -1)
+        if (old == NULL)
+            printf("old pwd not set");
+        else
         {
-            perror("cd");
-            return ;
+            char *prev_dir = find_env(*env, "OLDPWD")->val; // Get the previous directory from the environment
+            if (prev_dir)
+                chdir(prev_dir); // Change to the previous directory
         }
     }
-    // perror Print a message describing the meaning of the value of errno
+    else if (args_count == 2)
+    {
+        if (chdir(args[1]) != 0)
+        {
+            perror("cd");
+            return;
+        }
+    }
     else if (args_count > 2)
         ft_putstr_fd("cd: too many arguments\n", STDERR_FILENO);
+
     new_pwd = getcwd(NULL, 0);
-    // if (new_pwd == NULL)    
-    //     perror("cd");
-    update_env(env, new_pwd, old_pwd);
+    if (!new_pwd)
+        printf("cd: error retrieving current directory: getcwd: cannot\
+        access parent directories: No such file or directory\n");
+
+    update_env(env, new_pwd, old);
 }
