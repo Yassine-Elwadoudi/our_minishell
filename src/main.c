@@ -6,7 +6,7 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:12:45 by asabri            #+#    #+#             */
-/*   Updated: 2023/07/10 01:27:34 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/07/10 15:03:01 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	(void)env;
 	envrm = dup_env(env);
-	// check_oldpwd(&envrm);
+	check_oldpwd(&envrm);
 	while (1)
 	{
 		line = readline("\E[31;1mminishell-$  \033[0m");

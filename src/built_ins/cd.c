@@ -6,7 +6,7 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:33:30 by yelwadou          #+#    #+#             */
-/*   Updated: 2023/07/10 01:28:57 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/07/10 15:22:19 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,12 @@ void check_oldpwd(t_env **env)
     free(old);
 }
 
-
-
 void cd(int args_count, char **args, t_env **env)
 {
     char *new_pwd;
     char *home;
     
     home = getenv("HOME");
-    check_oldpwd(env); // Call check_oldpwd before changing directories
     char *old = getcwd(NULL, 0);
     if (args_count == 1 || args[1][0] == '~')
         chdir(home);
@@ -68,7 +65,7 @@ void cd(int args_count, char **args, t_env **env)
             printf("old pwd not set");
         else
         {
-            char *prev_dir = find_env(*env, "OLDPWD")->val; // Get the previous directory from the environment
+            char *prev_dir = find_env(*env, "OLDPWD")->val;  // Get the previous directory from the environment
             if (prev_dir)
                 chdir(prev_dir); // Change to the previous directory
         }
