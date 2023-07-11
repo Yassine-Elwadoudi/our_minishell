@@ -6,7 +6,7 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:33:30 by yelwadou          #+#    #+#             */
-/*   Updated: 2023/07/11 15:15:46 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/07/11 15:36:31 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,10 @@ void	cd(int args_count, char **args, t_env **env)
 	{
 		prev_dir_node = find_env(*env, "OLDPWD");
 		if (prev_dir_node->val && prev_dir_node->val[0] != '\0')
+		{
 			chdir(prev_dir_node->val);
+			pwd();
+		}
 		else
 		{
 			printf("cd : OLDPWD not set\n");
