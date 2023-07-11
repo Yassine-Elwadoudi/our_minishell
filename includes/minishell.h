@@ -6,7 +6,7 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:04:19 by asabri            #+#    #+#             */
-/*   Updated: 2023/07/11 15:02:43 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/07/11 18:58:44 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ typedef struct s_env
     char *val;
     char *prev;
     struct s_env *next;
+    int print_err;
+    int chdir_result;
 }              t_env;
 
 void pwd();
@@ -80,6 +82,8 @@ void	add_var_back(t_env **lst, t_env *new);
 t_env	*ft_lstlast(t_env *node);
 void	built_ins(int argc, char **argv, t_env *envrm);
 void check_oldpwd(t_env **env);
+void cd_helper(int args_count, char **args, t_env **env, char *home);
+void cd_helper2(int args_count, char **args, t_env **env, char *home);
 // execution part
 
 #endif
