@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 15:31:47 by asabri            #+#    #+#             */
-/*   Updated: 2023/07/06 01:30:55 by asabri           ###   ########.fr       */
+/*   Updated: 2023/07/12 15:37:17 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,6 +213,156 @@
 //     return (init.token);
 // }
 
+// // Function to append a new token to the end of a token list
+// void add_token_back(t_token **lst, t_token *new)
+// {
+//     if (*lst == NULL) {
+//         *lst = new;
+//     } else {
+//         t_token *last = *lst;
+//         while (last->next != NULL) {
+//             last = last->next;
+//         }
+//         last->next = new;
+//         new->prev = last;
+//     }
+// }
+
+// // Function to create a new token
+// t_token *newtoken(t_flgs type, char *tok, bool hdoc, bool expnd)
+// {
+//     t_token *node = malloc(sizeof(t_token));
+//     node->token = strdup(tok);
+//     node->type = type;
+//     node->prev = NULL;
+//     node->next = NULL;
+//     node->bottom = NULL;
+//     node->hd = hdoc;
+//     node->expand = expnd;
+//     return node;
+// }
+
+// // Utility function to get a word from a string
+// char *get_word(char *str, int *index) 
+// {
+//     int j = *index;
+//     int i = j;
+//     while (str[i] && !ft_strchr("\"\'<>() \t", str[i])) {
+//         i++;
+//     }
+//     *index = i - 1;
+//     return (strndup(&str[j], i - j));
+// }
+
+// // Utility function to get a quoted string from a string
+// char *get_quote(char *str, int *index, char car)
+// {
+//     int i = *index;
+//     int j = i;
+//     while (str[i] && str[i] != car) {
+//         i++;
+//     }
+//     *index = i - 1;
+//     return strndup(&str[j], i - j);
+// }
+
+// // Function to determine the flag of a character
+// t_flgs which_flag(char c, bool unkown) 
+// {
+//     if (c == '\"') {
+//         return DOUBLE_QUOTE;
+//     } else if (c == '\'') {
+//         return SINGLE_QUOTE;
+//     } else if (c == '|') {
+//         return PIPE;
+//     } else if (c == '<') {
+//         return REDIRECT_IN;
+//     } else if (c == '>') {
+//         return REDIRECT_OUT;
+//     } else if (c == '(') {
+//         return LEFT_PARENTHESIS;
+//     } else if (c == ')') {
+//         return RIGHT_PARENTHESIS;
+//     } else if (unkown) {
+//         return END;
+//     } else {
+//         return WORD;
+//     }
+// }
+
+// // Structure for initialization variables
+
+
+// // Function to initialize the initialization variables
+// void initialize(t_init *init) {
+//     init->i = -1;
+//     init->token = NULL; 
+//     init->double_quote = false;
+//     init->single_quote = false;
+//     init->space = false;
+// }
+
+// // Function to check if the string consists of only spaces
+// bool only_spaces(int i, char *str)
+// {
+//     while (str[i] && str[i] == ' ') {
+//         i++;
+//     }
+//     return str[i] == '\0';
+// }
+// // Main tokenizing function
+// t_token *strtoken(char *line) {
+//     t_init init;
+//     initialize(&init);
+
+//     while (line[init.i]) {
+//         if ((init.double_quote && line[init.i] == '\"') || (init.single_quote && line[init.i] == '\'')) {
+//             init.double_quote = !init.double_quote;
+//             init.single_quote = !init.single_quote;
+//         } else if (strchr("\"\'<>()\t", line[init.i])) {
+//             init.space = true;
+//             if (init.token != NULL && init.token->prev != NULL && init.token->prev->type == WORD && init.token->prev->next == NULL) {
+//                 // Append the current token to the previous token when there is no space between them
+//                 char *token_str = strndup(&line[init.i], 1);
+//                 size_t len = strlen(init.token->prev->token);
+//                 init.token->prev->token = realloc(init.token->prev->token, len + 2);
+//                 init.token->prev->token[len] = line[init.i];
+//                 init.token->prev->token[len + 1] = '\0';
+//                 free(token_str);
+//             } else {
+//                 add_token_back(&(init.token), newtoken(which_flag(line[init.i], false), strndup(&line[init.i], 1), 0, 0));
+//             }
+//         } else if (!strchr("\"\'<>() \t", line[init.i]) && (!init.double_quote || !init.single_quote)) {
+//             init.space = true;
+//             char *word = get_word(line, &(init.i));
+//             add_token_back(&(init.token), newtoken(WORD, word, 0, 0));
+//         }
+
+//         if (line[init.i] == ' ' || line[init.i] == '\t') {
+//             while ((line[init.i] == ' ' || line[init.i] == '\t') && line[init.i]) {
+//                 init.i++;
+//             }
+//             init.i--;
+//         }
+//         init.i++;
+//     }
+
+//     if ((init.single_quote && init.double_quote) || (init.token == NULL)) {
+//         fprintf(stderr, "Syntax Error: Invalid quoting\n");
+//         return NULL;
+//     }
+
+//     add_token_back(&(init.token), newtoken(END, strdup("newline"), 0, 0));
+
+//     return init.token;
+// }
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
 // Function to append a new token to the end of a token list
 void add_token_back(t_token **lst, t_token *new) {
     if (*lst == NULL) {
@@ -228,7 +378,7 @@ void add_token_back(t_token **lst, t_token *new) {
 }
 
 // Function to create a new token
-t_token *newtoken(t_flgs type, char *tok, bool hdoc, bool expnd) {
+t_token *newtoken(t_flgs type, const char *tok, bool hdoc, bool expnd) {
     t_token *node = malloc(sizeof(t_token));
     if (node == NULL) {
         perror("Memory allocation failed");
@@ -245,7 +395,7 @@ t_token *newtoken(t_flgs type, char *tok, bool hdoc, bool expnd) {
 }
 
 // Utility function to get a word from a string
-char *get_word(char *str, int *index) {
+char *get_word(const char *str, int *index) {
     int j = *index;
     int i = j;
     while (str[i] && !strchr("\"\'<>() \t", str[i])) {
@@ -255,58 +405,37 @@ char *get_word(char *str, int *index) {
     return strndup(&str[j], i - j);
 }
 
-// Utility function to get a quoted string from a string
-char *get_quote(char *str, int *index, char car) {
-    int i = *index;
-    int j = i;
-    while (str[i] && str[i] != car) {
-        i++;
-    }
-    *index = i - 1;
-    return strndup(&str[j], i - j);
-}
-
 // Function to determine the flag of a character
 t_flgs which_flag(char c, bool unkown) {
-    if (c == '\"') {
-        return DOUBLE_QUOTE;
-    } else if (c == '\'') {
-        return SINGLE_QUOTE;
-    } else if (c == '|') {
-        return PIPE;
-    } else if (c == '<') {
-        return REDIRECT_IN;
-    } else if (c == '>') {
-        return REDIRECT_OUT;
-    } else if (c == '(') {
-        return LEFT_PARENTHESIS;
-    } else if (c == ')') {
-        return RIGHT_PARENTHESIS;
-    } else if (unkown) {
-        return END;
-    } else {
-        return WORD;
+    switch (c) {
+        case '\"':
+            return DOUBLE_QUOTE;
+        case '\'':
+            return SINGLE_QUOTE;
+        case '|':
+            return PIPE;
+        case '<':
+            return REDIRECT_IN;
+        case '>':
+            return REDIRECT_OUT;
+        case '(':
+            return LEFT_PARENTHESIS;
+        case ')':
+            return RIGHT_PARENTHESIS;
+        default:
+            return unkown ? END : WORD;
     }
 }
 
-// Structure for initialization variables
 
 
 // Function to initialize the initialization variables
 void initialize(t_init *init) {
     init->i = -1;
-    init->token = NULL; 
+    init->token = NULL;
     init->double_quote = false;
     init->single_quote = false;
     init->space = false;
-}
-
-// Function to check if the string consists of only spaces
-bool only_spaces(int i, char *str) {
-    while (str[i] && str[i] == ' ') {
-        i++;
-    }
-    return str[i] == '\0';
 }
 
 // Main tokenizing function
@@ -316,16 +445,10 @@ t_token *strtoken(char *line) {
 
     while (line[++init.i]) {
         if ((init.double_quote && line[init.i] == '\"') || (init.single_quote && line[init.i] == '\'')) {
-            char *quoted_str = get_quote(line, &(init.i), line[init.i - 1]);
-            add_token_back(&(init.token), newtoken(which_flag(line[init.i - 1], false), quoted_str, (init.double_quote == true), 0));
+            init.double_quote = !init.double_quote;
+            init.single_quote = !init.single_quote;
         } else if (strchr("\"\'<>()\t", line[init.i])) {
             init.space = true;
-            if (line[init.i] == '\"') {
-                init.double_quote = !init.double_quote;
-            } else if (line[init.i] == '\'') {
-                init.single_quote = !init.single_quote;
-            }
-            add_token_back(&(init.token), newtoken(which_flag(line[init.i], false), strndup(&line[init.i], 1), 0, 0));
         } else if (!strchr("\"\'<>() \t", line[init.i]) && (!init.double_quote || !init.single_quote)) {
             init.space = true;
             char *word = get_word(line, &(init.i));
@@ -345,8 +468,9 @@ t_token *strtoken(char *line) {
         return NULL;
     }
 
-    // add_token_back(&(init.token), newtoken(END, strdup("newline"), 0, 0));
+    add_token_back(&(init.token), newtoken(END, strdup("newline"), 0, 0));
 
     return init.token;
 }
 
+// 

@@ -6,7 +6,7 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:33:30 by yelwadou          #+#    #+#             */
-/*   Updated: 2023/07/12 00:57:29 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/07/12 13:57:47 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,6 @@ void	check_oldpwd(t_env **env)
 // 	free(old);
 // }
 
-
 void	change_dir(char **args, t_env **env, int args_count)
 {
 	char	*home;
@@ -153,6 +152,7 @@ void	check_cd_dash(t_env **env)
 		}
 
 }
+
 void	cd(int args_count, char **args, t_env **env)
 {
 	char *new_pwd;

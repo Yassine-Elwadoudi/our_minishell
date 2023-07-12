@@ -6,7 +6,7 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:04:19 by asabri            #+#    #+#             */
-/*   Updated: 2023/07/12 00:57:41 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/07/12 15:38:24 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ typedef struct s_cmdline
 
 t_token *strtoken(char *str);
 // t_token *newtoken(t_flgs type,char *tok,int hdoc,int expnd);
-t_token *newtoken(t_flgs type, char *tok, bool hdoc, bool expnd);
-void	add_token_back(t_token **lst, t_token *new);
+t_token *newtoken(t_flgs type, const char *tok, bool hdoc, bool expnd);
+void add_token_back(t_token **lst, t_token *new);
 t_token	*ft_lstlst(t_token *lst);
 
 
@@ -70,6 +70,7 @@ typedef struct s_env
 void pwd();
 void cd(int args_count, char **args, t_env **env);
 void	echo(int argc, char **argv);
+void env_var(char **argv, t_env *env);
 int unset(char *variable, t_env **env_list);
 int export(char *variable, t_env **env);
 void env(t_env *env);

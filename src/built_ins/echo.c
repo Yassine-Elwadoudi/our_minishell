@@ -6,7 +6,7 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:32:41 by yelwadou          #+#    #+#             */
-/*   Updated: 2023/07/08 14:55:48 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/07/12 15:24:45 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ static int only_n(char *str)
     }
     return (1);
 }
-
+// TODO: need to fix echo $? to print out the exit status
+// TODO: $ should be handled in minishell and expand env var
 void echo(int argc, char **argv)
 {
     int i;
