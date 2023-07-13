@@ -6,7 +6,7 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:12:45 by asabri            #+#    #+#             */
-/*   Updated: 2023/07/10 18:13:04 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/07/13 23:06:58 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	built_ins(int argc, char **argv, t_env *envrm)
 	if (ft_strcmp(argv[0], "cd") == 0)
 		cd(argc, argv, &envrm);
 }
+
 void	process_line(char *line, t_env *envrm)
 {
 	t_token	*token;
@@ -72,6 +73,7 @@ int	main(int ac, char **av, char **env)
 	{
 		line = readline("\E[31;1mminishell-$  \033[0m");
 		process_line(line, envrm);
+		add_history(line);
 	}
 	return (0);
 }

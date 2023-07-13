@@ -6,7 +6,7 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:33:15 by yelwadou          #+#    #+#             */
-/*   Updated: 2023/07/08 13:33:53 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/07/12 17:58:37 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,11 @@ static int check_exit(char *input)
 void exit_built(int args_count, char **input)
 {
     int non_number = 0;
-    int i = 1;
+    int i = 0;
 
+    printf("count %d\n", args_count);
+    while (input[++i])
+        printf("values %s\n", input[i]);
     if (args_count == 1)
         exit(0);
     while (i < args_count)

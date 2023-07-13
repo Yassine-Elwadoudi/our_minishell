@@ -6,7 +6,7 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 15:31:47 by asabri            #+#    #+#             */
-/*   Updated: 2023/07/12 15:37:17 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/07/13 00:12:21 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -468,7 +468,7 @@ t_token *strtoken(char *line) {
         return NULL;
     }
 
-    add_token_back(&(init.token), newtoken(END, strdup("newline"), 0, 0));
+    // add_token_back(&(init.token), newtoken(END, strdup("newline"), 0, 0));
 
     return init.token;
 }
