@@ -6,11 +6,13 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:12:45 by asabri            #+#    #+#             */
-/*   Updated: 2023/07/13 23:06:58 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/07/15 23:44:14 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int g_global_exit = 0;
 
 void	built_ins(int argc, char **argv, t_env *envrm)
 {
@@ -35,11 +37,14 @@ void	process_line(char *line, t_env *envrm)
 {
 	t_token	*token;
 	t_token	*tmp;
+	(void) envrm;
 	int		args_count;
 	char	**args;
     int i;
 
 	token = strtoken(line);
+	expander(token, envrm);
+    // printf("%s\n",token->token);
 	args_count = 0;
     i = 0;
 	tmp = token;
@@ -56,6 +61,7 @@ void	process_line(char *line, t_env *envrm)
         i++;
 	}
 	built_ins(args_count, args, envrm);
+    exit_status();
 	free(args);
 }
 

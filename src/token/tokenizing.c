@@ -6,7 +6,7 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 15:31:47 by asabri            #+#    #+#             */
-/*   Updated: 2023/07/13 00:12:21 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/07/14 18:33:06 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -384,7 +384,7 @@ t_token *newtoken(t_flgs type, const char *tok, bool hdoc, bool expnd) {
         perror("Memory allocation failed");
         exit(EXIT_FAILURE);
     }
-    node->token = strdup(tok);
+    node->token = ft_strdup(tok);
     node->type = type;
     node->prev = NULL;
     node->next = NULL;
@@ -398,13 +398,24 @@ t_token *newtoken(t_flgs type, const char *tok, bool hdoc, bool expnd) {
 char *get_word(const char *str, int *index) {
     int j = *index;
     int i = j;
-    while (str[i] && !strchr("\"\'<>() \t", str[i])) {
+    while (str[i] && !strchr("\"\'<>() \t", str[i])) 
         i++;
-    }
     *index = i - 1;
     return strndup(&str[j], i - j);
 }
+char *get_q(char *str,int *index,char c)
+{
+    int	i;
+	int	j;
 
+	i = *index;
+	j = i + 1;
+	while (str[i] && str[i] != c)
+		i++;
+	if (!str[i])
+		return (*index = i - 1, ft_substr(str, j, i -1));
+	return (*index = i, ft_substr(str, j, i - 1));
+}
 // Function to determine the flag of a character
 t_flgs which_flag(char c, bool unkown) {
     switch (c) {
@@ -414,6 +425,8 @@ t_flgs which_flag(char c, bool unkown) {
             return SINGLE_QUOTE;
         case '|':
             return PIPE;
+        case '$':
+            return ENV;
         case '<':
             return REDIRECT_IN;
         case '>':
@@ -445,16 +458,19 @@ t_token *strtoken(char *line) {
 
     while (line[++init.i]) {
         if ((init.double_quote && line[init.i] == '\"') || (init.single_quote && line[init.i] == '\'')) {
+            add_token_back(&(init.token), newtoken(WORD, get_q(line, &init.i, line[init.i]), 0, 0));
             init.double_quote = !init.double_quote;
             init.single_quote = !init.single_quote;
-        } else if (strchr("\"\'<>()\t", line[init.i])) {
+        } else if (ft_strchr("\"\'<>()\t", line[init.i])) {
+            init.double_quote = !init.double_quote;
+            init.single_quote = !init.single_quote;
             init.space = true;
-        } else if (!strchr("\"\'<>() \t", line[init.i]) && (!init.double_quote || !init.single_quote)) {
+        } else if (!ft_strchr("\"\'<>() \t", line[init.i]) && (!init.double_quote || !init.single_quote)) {
             init.space = true;
             char *word = get_word(line, &(init.i));
-            add_token_back(&(init.token), newtoken(WORD, word, 0, 0));
+            t_flgs flag = (word[0] == '$') ? ENV : which_flag(line[init.i], 0);
+            add_token_back(&(init.token), newtoken(flag, word, 0, 0));
         }
-
         if (line[init.i] == ' ' || line[init.i] == '\t') {
             while ((line[init.i] == ' ' || line[init.i] == '\t') && line[init.i]) {
                 init.i++;
@@ -462,15 +478,10 @@ t_token *strtoken(char *line) {
             init.i--;
         }
     }
-
-    if ((init.single_quote && init.double_quote) || (init.token == NULL)) {
-        fprintf(stderr, "Syntax Error: Invalid quoting\n");
-        return NULL;
-    }
+    if ((init.single_quote || init.double_quote))
+        return (ft_putstr_fd("Syntax : Quote Unfound\n", 2), NULL);
 
     // add_token_back(&(init.token), newtoken(END, strdup("newline"), 0, 0));
 
     return init.token;
 }
-
-// 

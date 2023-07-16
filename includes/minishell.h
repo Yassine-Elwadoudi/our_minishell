@@ -6,7 +6,7 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:04:19 by asabri            #+#    #+#             */
-/*   Updated: 2023/07/12 15:38:24 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/07/15 23:35:20 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "token.h"
 #include <stdio.h>
 #include <unistd.h>
+#include <sys/wait.h>
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
@@ -25,6 +26,12 @@
 # include <stdbool.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+
+
+// global variable
+
+extern int g_global_exit;
+void execute_command(char *command, char **args);
 
 
 typedef struct  s_tree
@@ -62,10 +69,12 @@ typedef struct s_env
     char *var;
     char *val;
     char *prev;
+    int exit_status;
     struct s_env *next;
     int print_err;
     int chdir_result;
 }              t_env;
+
 
 void pwd();
 void cd(int args_count, char **args, t_env **env);
@@ -84,6 +93,11 @@ t_env	*ft_lstlast(t_env *node);
 void	built_ins(int argc, char **argv, t_env *envrm);
 void check_oldpwd(t_env **env);
 void	check_cd_dash(t_env **env);
-// execution part
+
+
+// expander
+void expander(t_token *token, t_env *env);
+void exit_status();
+
 
 #endif

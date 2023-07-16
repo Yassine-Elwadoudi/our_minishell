@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asabri <asabri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 02:36:54 by asabri            #+#    #+#             */
-/*   Updated: 2023/07/06 01:26:06 by asabri           ###   ########.fr       */
+/*   Updated: 2023/07/14 15:59:48 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ typedef enum {
     REDIRECT_OUT,
     LEFT_PARENTHESIS,
     RIGHT_PARENTHESIS,
+    SIGHER,
+    ENV,
     END
 } t_flgs;
 
@@ -46,6 +48,7 @@ typedef struct s_token {
     bool hd;
     bool expand;
 } t_token;
+
 
 // typedef enum s_flgs
 // {
@@ -80,6 +83,7 @@ typedef struct s_token {
 //     struct s_token *prev;
 
 // }               t_token;
+// Structure for initialization variables
 typedef struct {
     int i;
     t_token *token;
