@@ -6,7 +6,7 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:12:45 by asabri            #+#    #+#             */
-/*   Updated: 2023/07/15 23:44:14 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/07/16 01:37:27 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	process_line(char *line, t_env *envrm)
         i++;
 	}
 	built_ins(args_count, args, envrm);
-    exit_status();
+    execute_command(args[0], args);
 	free(args);
 }
 

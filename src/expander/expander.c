@@ -6,23 +6,32 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 13:18:47 by yelwadou          #+#    #+#             */
-/*   Updated: 2023/07/16 01:15:23 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/07/16 01:39:09 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void exit_status()
+void execute_command(char *command, char **args)
 {
     pid_t pid = fork();
-
+    if (pid == 0)
+    {
+        // Child process
+        execvp(command, args);
+        exit(EXIT_FAILURE);
+    }
+    else if (pid > 0)
+    {
+        // Parent process
         int status;
         waitpid(pid, &status, 0);
         if (WIFEXITED(status))
         {
             int exit_status = WEXITSTATUS(status);
-            g_global_exit = exit_status;
+            g_global_exit = exit_status; // Update the global variable with the exit status of the command
         }
+    }
 }
 
 void exit_expander(t_token *token)

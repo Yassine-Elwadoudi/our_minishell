@@ -6,7 +6,7 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:04:19 by asabri            #+#    #+#             */
-/*   Updated: 2023/07/15 23:35:20 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/07/16 01:37:23 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ void	check_cd_dash(t_env **env);
 
 // expander
 void expander(t_token *token, t_env *env);
-void exit_status();
-
+void execute_command(char *commands, char **args);
 
 #endif
