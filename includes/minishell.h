@@ -6,7 +6,7 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:04:19 by asabri            #+#    #+#             */
-/*   Updated: 2023/07/16 01:37:23 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/07/16 15:14:36 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,7 @@
 
 
 // global variable
-
 extern int g_global_exit;
-void execute_command(char *command, char **args);
 
 
 typedef struct  s_tree
@@ -74,7 +72,6 @@ typedef struct s_env
     int print_err;
     int chdir_result;
 }              t_env;
-
 
 void pwd();
 void cd(int args_count, char **args, t_env **env);

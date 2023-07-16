@@ -6,12 +6,14 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 13:18:47 by yelwadou          #+#    #+#             */
-/*   Updated: 2023/07/16 01:39:09 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/07/16 15:13:44 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+// waits for the process to finish to get the last exit status 
+// TODO: edit this after the execution is done THIS IS JUST A TEST
 void execute_command(char *command, char **args)
 {
     pid_t pid = fork();
@@ -41,16 +43,18 @@ void exit_expander(t_token *token)
     {
         if (current->type == ENV)
         {
+            // if its $? only
             if (current->token[1] == '?' && current->token[2] == '\0')
             {
                 free(current->token);
-                char *exit_status_str = ft_itoa(g_global_exit); // Use the global variable to expand the $? variable
+                char *exit_status_str = ft_itoa(g_global_exit);
                 current->token = exit_status_str;
                 printf("%s\n", current->token);
             }
+            // if its followed by other chars before the space
             else if (current->token[1] == '?' && current->token[2] != '\0')
             {
-                char *exit_status_str = ft_itoa(g_global_exit); // Use the global variable to expand the $? variable
+                char *exit_status_str = ft_itoa(g_global_exit);
                 char *expanded_token = ft_strjoin(exit_status_str, &current->token[2]);
                 free(current->token);
                 current->token = expanded_token;
@@ -72,9 +76,9 @@ void expander(t_token *token, t_env *env)
     {
         if (current->type == ENV)
         {
-            exit_expander(token);
+            exit_expander(token); // check if $? or just a env variable needs to be expanded
             char *env_name = &current->token[1];
-            t_env *env_variable = find_env(env, env_name);
+            t_env *env_variable = find_env(env, env_name); // if not found do nothing
             if (env_variable)
             {
                 free(current->token);

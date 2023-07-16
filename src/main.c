@@ -6,7 +6,7 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:12:45 by asabri            #+#    #+#             */
-/*   Updated: 2023/07/16 01:37:27 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/07/16 15:06:01 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	process_line(char *line, t_env *envrm)
 
 	token = strtoken(line);
 	expander(token, envrm);
-    // printf("%s\n",token->token);
 	args_count = 0;
     i = 0;
 	tmp = token;
@@ -61,7 +60,7 @@ void	process_line(char *line, t_env *envrm)
         i++;
 	}
 	built_ins(args_count, args, envrm);
-    execute_command(args[0], args);
+    // execute_command(args[0], args); //TODO: just testing the exit status (still need to be fixed)
 	free(args);
 }
 
