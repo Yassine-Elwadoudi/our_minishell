@@ -6,7 +6,7 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 13:18:47 by yelwadou          #+#    #+#             */
-/*   Updated: 2023/07/16 15:13:44 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/08/13 11:59:46 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 // waits for the process to finish to get the last exit status 
 // TODO: edit this after the execution is done THIS IS JUST A TEST
+//  THIS IS ONLY FOR THE EXIT STATUS TO CHECK IF THE EXPANDER IS WORKING AS IT SHOULD
 void execute_command(char *command, char **args)
 {
     pid_t pid = fork();
@@ -31,7 +32,11 @@ void execute_command(char *command, char **args)
         if (WIFEXITED(status))
         {
             int exit_status = WEXITSTATUS(status);
-            g_global_exit = exit_status; // Update the global variable with the exit status of the command
+            if (exit_status != 0)
+            {
+                printf("The command '%s' failed with exit status %d\n", command, exit_status);
+                g_global_exit = exit_status;
+            }
         }
     }
 }
@@ -83,7 +88,7 @@ void expander(t_token *token, t_env *env)
             {
                 free(current->token);
                 current->token = ft_strdup(env_variable->val);
-                printf("%s\n", current->token);
+                // printf("%s\n", current->token);
             }
         }
         current = current->next;

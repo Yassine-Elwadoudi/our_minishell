@@ -6,7 +6,7 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:12:45 by asabri            #+#    #+#             */
-/*   Updated: 2023/07/16 15:06:01 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/08/13 12:01:46 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int g_global_exit = 0;
 
 void	built_ins(int argc, char **argv, t_env *envrm)
 {
-	// check_oldpwd(&envrm);
+
 	if (ft_strcmp(argv[0], "env") == 0)
 		env(envrm);
 	if (ft_strcmp(argv[0], "unset") == 0 && argc > 1)
