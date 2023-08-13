@@ -6,7 +6,7 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:04:19 by asabri            #+#    #+#             */
-/*   Updated: 2023/08/12 16:48:28 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/08/13 15:51:43 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ t_env	*ft_lstlast(t_env *node);
 void	built_ins(int argc, char **argv, t_env *envrm);
 void check_oldpwd(t_env **env);
 void	check_cd_dash(t_env **env);
+void check_home(t_env **env);
 
 
 // expander

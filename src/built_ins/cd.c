@@ -6,7 +6,7 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:33:30 by yelwadou          #+#    #+#             */
-/*   Updated: 2023/07/31 14:53:47 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/08/13 16:00:45 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,13 @@ static void	update_env(t_env **env, const char *pwd, const char *oldpwd)
 void	check_oldpwd(t_env **env)
 {
 	t_env	*oldpwd;
-	char	*old;
 	char	**new_old;
 
 	oldpwd = find_env(*env, "OLDPWD");
-	old = getcwd(NULL, 0);
 	if (oldpwd)
 	{
 		free(oldpwd->val);
-		oldpwd->val = ft_strdup(old);
+		oldpwd->val = ft_strdup("");
 	}
 	else if (!oldpwd)
 	{
@@ -53,7 +51,6 @@ void	check_oldpwd(t_env **env)
 		new_old[1] = ft_strdup("");
 		add_var_back(env, newvar(new_old));
 	}
-	free(old);
 }
 
 // void	cd(int args_count, char **args, t_env **env)
@@ -112,14 +109,13 @@ void	check_oldpwd(t_env **env)
 
 void	change_dir(char **args, t_env **env, int args_count)
 {
-	char	*home;
-
-	home = getenv("HOME");
+	check_home(env);
+	t_env *home = find_env(*env, "HOME");
 	(*env)->print_err = 0;
 	(*env)->chdir_result = -1;
 	if (args_count == 1 || (args_count == 2 && args[1][0] == '~')
 		|| (args[1][0] == '-' && args[1][1] == '-' && args[1][2] == '\0'))
-		(*env)->chdir_result = chdir(home);
+		(*env)->chdir_result = chdir(home->val);
 	else if (args_count == 2 && args[1][0] == '-' && args[1][1] == '\0')
 		check_cd_dash(env);
 	else if (args_count == 2 && args[1][0] == '-' && args[1][1] != '\0')
@@ -134,6 +130,17 @@ void	change_dir(char **args, t_env **env, int args_count)
 		printf("cd: too many arguments\n");
 		(*env)->print_err = 1;
 	}
+}
+
+void check_home(t_env **env)
+{
+	t_env	*home;
+
+	home = find_env(*env, "HOME");
+	if (home)
+			chdir(home->val);
+	else
+		printf("HOME not set\n");
 }
 
 void	check_cd_dash(t_env **env)
