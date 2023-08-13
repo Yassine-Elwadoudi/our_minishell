@@ -6,7 +6,7 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:33:30 by yelwadou          #+#    #+#             */
-/*   Updated: 2023/08/13 19:36:10 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/08/13 19:41:24 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,13 @@ static void	update_env(t_env **env, const char *pwd, const char *oldpwd)
 void	check_oldpwd(t_env **env)
 {
 	t_env	*oldpwd;
-	char	*old;
 	char	**new_old;
 
 	oldpwd = find_env(*env, "OLDPWD");
-	old = getcwd(NULL, 0);
 	if (oldpwd)
 	{
 		free(oldpwd->val);
-		oldpwd->val = ft_strdup(old);
+		oldpwd->val = ft_strdup("");
 	}
 	else if (!oldpwd)
 	{
