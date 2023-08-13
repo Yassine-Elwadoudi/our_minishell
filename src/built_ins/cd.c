@@ -6,7 +6,7 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:33:30 by yelwadou          #+#    #+#             */
-/*   Updated: 2023/07/12 13:57:47 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/08/13 19:36:10 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,14 +112,16 @@ void	check_oldpwd(t_env **env)
 
 void	change_dir(char **args, t_env **env, int args_count)
 {
-	char	*home;
-
-	home = getenv("HOME");
+	t_env *home = find_env(*env, "HOME");
 	(*env)->print_err = 0;
 	(*env)->chdir_result = -1;
 	if (args_count == 1 || (args_count == 2 && args[1][0] == '~')
 		|| (args[1][0] == '-' && args[1][1] == '-' && args[1][2] == '\0'))
-		(*env)->chdir_result = chdir(home);
+		{
+			check_home(*env);
+			if (home != NULL && home->var != NULL)
+				(*env)->chdir_result = chdir(home->val); // here is the segv
+		}
 	else if (args_count == 2 && args[1][0] == '-' && args[1][1] == '\0')
 		check_cd_dash(env);
 	else if (args_count == 2 && args[1][0] == '-' && args[1][1] != '\0')
@@ -135,6 +137,20 @@ void	change_dir(char **args, t_env **env, int args_count)
 		(*env)->print_err = 1;
 	}
 }
+
+void check_home(t_env *env)
+{
+    t_env *home;
+
+    home = find_env(env, "HOME");
+    if (home == NULL || home->val == NULL)
+    {
+        printf("HOME not set\n");
+        return;
+    }
+    chdir(home->val);
+}
+
 
 void	check_cd_dash(t_env **env)
 {
