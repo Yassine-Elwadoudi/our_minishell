@@ -6,7 +6,7 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:33:15 by yelwadou          #+#    #+#             */
-/*   Updated: 2023/07/13 23:09:06 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/08/14 12:54:29 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static int check_exit(char *input)
     }
     return 0;
 }
+
 void exit_built(int args_count, char **input)
 {
     int non_number = 0;
@@ -41,24 +42,32 @@ void exit_built(int args_count, char **input)
     }
     if (args_count == 2 && input[1] != NULL && non_number)
     {
+        // exit l 1 1 1``
         ft_putstr_fd("exit: ", STDERR_FILENO);
         ft_putstr_fd(input[1], STDERR_FILENO);
         ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
-        exit(2);
+        exit(255);
     }
     else if (args_count > 2 && !non_number)
+    {
+        // exit 1 1 1 1
         ft_putstr_fd("exit: too many arguments\n", STDERR_FILENO);
+        // exit code 1
+    }
     else if (args_count > 2 && !check_exit(input[1]) && non_number)
     {
+        // exit 1 l l l
         ft_putstr_fd("exit: too many arguments\n", STDERR_FILENO);
-        exit(2);
+        // exit(1);
     }
     else if (args_count > 2 && non_number)
     {
+        // exit l l l
+        // exit l 1 1 1 1 1
         ft_putstr_fd("exit: ", STDERR_FILENO);
         ft_putstr_fd(input[1], STDERR_FILENO);
         ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
-        exit(2);
+        exit(255);
     }
     else
     {

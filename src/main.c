@@ -6,7 +6,7 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:12:45 by asabri            #+#    #+#             */
-/*   Updated: 2023/08/13 15:21:42 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/08/14 12:49:03 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,16 +72,6 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	(void)env;
-    printf("┓┏┓┏┓┃\n");
-    printf("┛┗┛┗┛┃＼○／\n");
-    printf("┓┏┓┏┓┃ /\n");
-    printf("┛┗┛┗┛┃ノ)\n");
-    printf("┓┏┓┏┓┃\n");
-    printf("┛┗┛┗┛┃\n");
-    printf("┓┏┓┏┓┃\n");
-    printf("┛┗┛┗┛┃\n");
-    printf("┓┏┓┏┓┃\n");
-    printf("┛┗┛┗┛┃\n");
 	envrm = dup_env(env);
 	check_oldpwd(&envrm);
 	while (1)

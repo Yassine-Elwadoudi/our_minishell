@@ -6,10 +6,9 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:33:30 by yelwadou          #+#    #+#             */
-/*   Updated: 2023/08/14 09:40:03 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/08/14 10:18:42 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../../includes/minishell.h"
 
@@ -53,6 +52,86 @@ void	check_oldpwd(t_env **env)
 		add_var_back(env, newvar(new_old));
 	}
 }
+
+void	change_dir(char **args, t_env **env, int args_count)
+{
+	t_env *home = find_env(*env, "HOME");
+	(*env)->print_err = 0;
+	(*env)->chdir_result = -1;
+	if (args_count == 1 || (args_count == 2 && args[1][0] == '~')
+		|| (args[1][0] == '-' && args[1][1] == '-' && args[1][2] == '\0'))
+		{
+			check_home(*env);
+			if (home != NULL && home->var != NULL)
+				(*env)->chdir_result = chdir(home->val);
+		}
+	else if (args_count == 2 && args[1][0] == '-' && args[1][1] == '\0')
+		check_cd_dash(env);
+	else if (args_count == 2 && args[1][0] == '-' && args[1][1] != '\0')
+	{
+		printf("cd: -%c: invalid option\n", args[1][1]);
+		(*env)->print_err = 1;
+	}
+	else if (args_count == 2)
+		(*env)->chdir_result = chdir(args[1]);
+	else if (args_count > 2)
+	{
+		printf("cd: too many arguments\n");
+		(*env)->print_err = 1;
+	}
+}
+
+void check_home(t_env *env)
+{
+    t_env *home;
+
+    home = find_env(env, "HOME");
+    if (home == NULL || home->val == NULL)
+    {
+        printf("HOME not set\n");
+		env->print_err = 1;
+        return;
+    }
+    // chdir(home->val);``````
+}
+
+void	check_cd_dash(t_env **env)
+{
+	t_env *prev_dir_node;
+		prev_dir_node = find_env(*env, "OLDPWD");
+		if (prev_dir_node->val && prev_dir_node->val[0] != '\0')
+		{
+			(*env)->chdir_result = chdir(prev_dir_node->val);
+			pwd();
+		}
+		else
+		{
+			printf("cd : OLDPWD not set\n");
+			(*env)->print_err = 1;
+		}
+
+}
+
+void	cd(int args_count, char **args, t_env **env)
+{
+	char *new_pwd;
+	char *old;
+
+	old = getcwd(NULL, 0);
+	change_dir(args, env, args_count);
+	new_pwd = getcwd(NULL, 0);
+	if (!new_pwd)
+	{
+		printf("cd: error retrieving current directory: getcwd:\
+ cannot access parent directories: No such file or directory\n");
+	}
+	else if (errno != 0 && (*env)->print_err == 0 && (*env)->chdir_result == -1)
+		perror("cd");
+	else if ((*env)->print_err == 0)
+	update_env(env, new_pwd, old);
+	free(old);
+}
+
 
 // void	cd(int args_count, char **args, t_env **env)
 // {
@@ -107,82 +186,3 @@ void	check_oldpwd(t_env **env)
 // 		update_env(env, new_pwd, old);
 // 	free(old);
 // }
-
-void	change_dir(char **args, t_env **env, int args_count)
-{
-	t_env *home = find_env(*env, "HOME");
-	(*env)->print_err = 0;
-	(*env)->chdir_result = -1;
-	if (args_count == 1 || (args_count == 2 && args[1][0] == '~')
-		|| (args[1][0] == '-' && args[1][1] == '-' && args[1][2] == '\0'))
-		{
-			check_home(*env);
-			if (home != NULL && home->var != NULL)
-				(*env)->chdir_result = chdir(home->val);
-		}
-	else if (args_count == 2 && args[1][0] == '-' && args[1][1] == '\0')
-		check_cd_dash(env);
-	else if (args_count == 2 && args[1][0] == '-' && args[1][1] != '\0')
-	{
-		printf("cd: -%c: invalid option\n", args[1][1]);
-		(*env)->print_err = 1;
-	}
-	else if (args_count == 2)
-		(*env)->chdir_result = chdir(args[1]);
-	else if (args_count > 2)
-	{
-		printf("cd: too many arguments\n");
-		(*env)->print_err = 1;
-	}
-}
-
-void check_home(t_env *env)
-{
-    t_env *home;
-
-    home = find_env(env, "HOME");
-    if (home == NULL || home->val == NULL)
-    {
-        printf("HOME not set\n");
-		env->print_err = 1;
-        return;
-    }
-    chdir(home->val);
-}
-
-void	check_cd_dash(t_env **env)
-{
-	t_env *prev_dir_node;
-		prev_dir_node = find_env(*env, "OLDPWD");
-		if (prev_dir_node->val && prev_dir_node->val[0] != '\0')
-		{
-			(*env)->chdir_result = chdir(prev_dir_node->val);
-			pwd();
-		}
-		else
-		{
-			printf("cd : OLDPWD not set\n");
-			(*env)->print_err = 1;
-		}
-
-}
-
-void	cd(int args_count, char **args, t_env **env)
-{
-	char *new_pwd;
-	char *old;
-
-	old = getcwd(NULL, 0);
-	change_dir(args, env, args_count);
-	new_pwd = getcwd(NULL, 0);
-	if (!new_pwd)
-	{
-		printf("cd: error retrieving current directory: getcwd:\
- cannot access parent directories: No such file or directory\n");
-	}
-	else if (errno != 0 && (*env)->print_err == 0 && (*env)->chdir_result == -1)
-		perror("cd");
-	else if ((*env)->print_err == 0)
-	update_env(env, new_pwd, old);
-	free(old);
-}
