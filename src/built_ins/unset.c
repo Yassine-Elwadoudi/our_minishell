@@ -6,7 +6,7 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:33:24 by yelwadou          #+#    #+#             */
-/*   Updated: 2023/08/16 12:07:53 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/08/16 12:23:19 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,30 +15,21 @@
 int check_identifier(char *identifier)
 {
     int i = 0;
-    int invalid = 0;
     
     while (identifier[i])
     {
-        if (i == 0 && (identifier[i] >= '0' && identifier[i] <= '9'))
-            invalid++;
-        if ((identifier[i] == ' ' || identifier[i] == '-' ||
-            (identifier[i] <= 'a' && identifier[i] >= 'z') ||
-            (identifier[i] <= 'A' && identifier[i] >= 'Z')) && identifier[i] != '_')
-            invalid++;
+        if (!((identifier[i] >= 'a' && identifier[i] <= 'z') ||
+              (identifier[i] >= 'A' && identifier[i] <= 'Z') ||
+              identifier[i] == '_'))
+        {
+            printf("'%s' : not a valid identifier \n", identifier);
+            return (g_global_exit = 1, 1);
+        }
         i++;
     }
-    if (invalid > 0)
-    {
-        printf("'%s' : not a valid identifier \n", identifier);
-        g_global_exit = 1;
-        return 1;
-    }
-    else
-    {
-        g_global_exit = 0;
-        return 0;
-    }
+    return (g_global_exit = 0, 0);
 }
+
 
 int unset(char *variable, t_env **env_list)
 {
