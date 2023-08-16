@@ -6,7 +6,7 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:12:45 by asabri            #+#    #+#             */
-/*   Updated: 2023/08/14 12:49:03 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/08/16 12:38:26 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		line = readline("\E[31;1mminishell-$  \033[0m");
+		if (line[0] == '\0')
+			continue;
 		process_line(line, envrm);
 		add_history(line);
 	}
