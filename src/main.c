@@ -6,7 +6,7 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:12:45 by asabri            #+#    #+#             */
-/*   Updated: 2023/08/16 12:38:26 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/08/16 14:03:44 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,12 @@ void	built_ins(int argc, char **argv, t_env *envrm)
 	if (ft_strcmp(argv[0], "echo") == 0)
 		echo(argc, argv);
 	if (ft_strcmp(argv[0], "export") == 0)
-		export(argv[1], &envrm);
+	{
+		if (argc == 1)
+			export_alone(envrm);
+		else
+			export(argv[1], &envrm);
+	}
 	if (ft_strcmp(argv[0], "cd") == 0)
 		cd(argc, argv, &envrm);
 }

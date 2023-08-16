@@ -6,7 +6,7 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:33:24 by yelwadou          #+#    #+#             */
-/*   Updated: 2023/08/16 12:23:19 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/08/16 13:14:04 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int check_identifier(char *identifier)
               (identifier[i] >= 'A' && identifier[i] <= 'Z') ||
               identifier[i] == '_'))
         {
-            printf("'%s' : not a valid identifier \n", identifier);
+            printf("'%s': not a valid identifier \n", identifier);
             return (g_global_exit = 1, 1);
         }
         i++;

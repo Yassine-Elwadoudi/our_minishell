@@ -6,7 +6,7 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:33:11 by yelwadou          #+#    #+#             */
-/*   Updated: 2023/08/16 10:33:54 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/08/16 14:07:35 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,6 @@ void env(t_env *env)
         return ;
     while (env)
     {
-        // ft_putstr_fd(env->var, STDOUT_FILENO);
-        // ft_putstr_fd("=", STDOUT_FILENO);
-        // ft_putstr_fd(env->val, STDOUT_FILENO);
-        // ft_putstr_fd("\n", STDOUT_FILENO);
         printf("%s=%s\n", env->var, env->val);
         env = env->next;
     }
