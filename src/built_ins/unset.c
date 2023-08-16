@@ -6,11 +6,39 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:33:24 by yelwadou          #+#    #+#             */
-/*   Updated: 2023/08/16 11:08:34 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/08/16 12:07:53 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+int check_identifier(char *identifier)
+{
+    int i = 0;
+    int invalid = 0;
+    
+    while (identifier[i])
+    {
+        if (i == 0 && (identifier[i] >= '0' && identifier[i] <= '9'))
+            invalid++;
+        if ((identifier[i] == ' ' || identifier[i] == '-' ||
+            (identifier[i] <= 'a' && identifier[i] >= 'z') ||
+            (identifier[i] <= 'A' && identifier[i] >= 'Z')) && identifier[i] != '_')
+            invalid++;
+        i++;
+    }
+    if (invalid > 0)
+    {
+        printf("'%s' : not a valid identifier \n", identifier);
+        g_global_exit = 1;
+        return 1;
+    }
+    else
+    {
+        g_global_exit = 0;
+        return 0;
+    }
+}
 
 int unset(char *variable, t_env **env_list)
 {
@@ -18,22 +46,26 @@ int unset(char *variable, t_env **env_list)
     t_env *prev;
 
     if (variable == NULL || variable[0] == '\0')
-        return 0;
-    env = *env_list;
-    while (env)
+        return (g_global_exit = 0, 0);
+    if (!check_identifier(variable))
     {
-        if (env->next && ft_strcmp(env->next->var, variable) == 0)
+        env = *env_list;
+        while (env)
         {
-            prev = env->next;
-            env->next = prev->next;
-            free(prev->var);
-            free(prev->val);
-            free(prev);
-            return 0;
+            if (env->next && ft_strcmp(env->next->var, variable) == 0)
+            {
+                prev = env->next;
+                env->next = prev->next;
+                free(prev->var);
+                free(prev->val);
+                free(prev);
+                return 0;
+            }
+            env = env->next;
         }
-        env = env->next;
+        return (g_global_exit = 0, 0);
     }
-    return 1;
+    return (g_global_exit = 1, 0);
 }
 
 /*

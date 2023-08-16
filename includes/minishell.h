@@ -6,7 +6,7 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 11:04:19 by asabri            #+#    #+#             */
-/*   Updated: 2023/08/14 09:38:31 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/08/16 11:50:15 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ t_token	*ft_lstlst(t_token *lst);
 
 
 
-// built ins
+// ------------------------------builtins------------------------------
 typedef struct s_env
 {
     char *var;
@@ -91,6 +91,7 @@ void	built_ins(int argc, char **argv, t_env *envrm);
 void check_oldpwd(t_env **env);
 void	check_cd_dash(t_env **env);
 void check_home(t_env *env);
+int check_identifier(char *identifier);
 
 
 // expander
