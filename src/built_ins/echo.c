@@ -6,7 +6,7 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:32:41 by yelwadou          #+#    #+#             */
-/*   Updated: 2023/08/12 18:28:58 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/08/16 10:33:12 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ static int only_n(char *str)
     }
     return (1);
 }
-// TODO: need to fix echo $? to print out the exit status
-// TODO: $ should be handled in minishell and expand env var // --->FIXED 
+// TODO: need to fix echo $? to print out the exit status     // ---> FIXED
+// TODO: $ should be handled in minishell and expand env var //  ---> FIXED 
 void echo(int argc, char **argv)
 {
     int i;
@@ -49,4 +49,5 @@ void echo(int argc, char **argv)
     }
     if (display_return == 1)
         ft_putstr_fd("\n", STDOUT_FILENO);
+    g_global_exit = 0;
 }

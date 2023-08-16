@@ -4,8 +4,9 @@
 > - Builtins part 
 
  
-### cd
+### cd -- fixed the first
 when we unset HOME and we do "cd" it change the directory succesfully while it shouldn't
+need to fix the expander
 
 ### echo 
 echo -n -n -n -n -n -nnnnnnnn a lots of -nnn separeted by spaces should also work as it is only -n and not display a newlineecho -n -n -n -n -n -nnnnnnnn a lots of -nnn separeted by spaces should also work as it is only -n and not display a newline
@@ -29,3 +30,8 @@ rm -f ft_memset.o ft_bzero.o ft_memcpy.o ft_memmove.o ft_memchr.o ft_memcmp.o ft
 rm -f libft.a
 
 ```
+
+> - expander part
+
+## echo 
+after unseting a var from the ENV it should display just a new line and not print whatever after echo  : unset HOME > echo $HOME = "\n" NOT $HOME

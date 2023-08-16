@@ -6,7 +6,7 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:33:30 by yelwadou          #+#    #+#             */
-/*   Updated: 2023/08/14 10:18:42 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/08/16 10:12:57 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void check_home(t_env *env)
 		env->print_err = 1;
         return;
     }
-    // chdir(home->val);``````
+    // chdir(home->val);
 }
 
 void	check_cd_dash(t_env **env)
@@ -128,7 +128,11 @@ void	cd(int args_count, char **args, t_env **env)
 	else if (errno != 0 && (*env)->print_err == 0 && (*env)->chdir_result == -1)
 		perror("cd");
 	else if ((*env)->print_err == 0)
-	update_env(env, new_pwd, old);
+		update_env(env, new_pwd, old);
+	if ((*env)->chdir_result == 0)
+		g_global_exit = 0;
+	if ((*env)->chdir_result == -1)
+		g_global_exit = 1;
 	free(old);
 }
 

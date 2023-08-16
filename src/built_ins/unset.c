@@ -6,7 +6,7 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:33:24 by yelwadou          #+#    #+#             */
-/*   Updated: 2023/07/08 13:35:37 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/08/16 11:08:34 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ NOTE 2:
 it will not be shown in env because env shows only the vars that are passed
 to the child process
 */
-// TODO: 
+// TODO: -----> doesnt need to be handled
 /*
 handle unseting read only var after finishing execution
 */
