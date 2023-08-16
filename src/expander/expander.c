@@ -6,7 +6,7 @@
 /*   By: yelwadou <yelwadou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 13:18:47 by yelwadou          #+#    #+#             */
-/*   Updated: 2023/08/13 11:59:46 by yelwadou         ###   ########.fr       */
+/*   Updated: 2023/08/16 16:06:46 by yelwadou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void expander(t_token *token, t_env *env)
             exit_expander(token); // check if $? or just a env variable needs to be expanded
             char *env_name = &current->token[1];
             t_env *env_variable = find_env(env, env_name); // if not found do nothing
-            if (env_variable)
+            if (env_variable && current->token[2] == '\0')
             {
                 free(current->token);
                 current->token = ft_strdup(env_variable->val);
@@ -94,3 +94,5 @@ void expander(t_token *token, t_env *env)
         current = current->next;
     }
 }
+
+
